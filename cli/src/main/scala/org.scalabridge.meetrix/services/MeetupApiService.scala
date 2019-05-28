@@ -39,4 +39,22 @@ class MeetupApiService(httpClient: Client[IO])(implicit contextShift: ContextShi
         )
       )
   }
+
+  def ListMyGroups():IO[List[RsvpedEvent]] = {
+    // Decodes the body of the HTTP response (which is in JSON) into our model using the decoder we defined
+    import org.http4s.circe.CirceEntityDecoder._
+
+
+
+    httpClient
+      .expect[List[RsvpedEvent]](
+      Request[IO](
+        uri = Uri
+          .uri("https://api.meetup.com/self/groups")
+       ,
+        headers = Headers.of(Authorization(Credentials.Token("Bearer".ci, API_KEY)))
+      )
+    )
+  }
+
 }
