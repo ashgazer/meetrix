@@ -33,6 +33,29 @@ lazy val server = Project("server", file("server"))
   )
   .settings(commonSettings)
 
+
+lazy val cli = Project("cli", file("cli"))
+  .settings(
+    libraryDependencies ++= Seq(
+      // Our http library, both for running the server and HTTP client
+      "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
+      "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
+      "org.http4s" %% "http4s-dsl" % Http4sVersion,
+      "org.http4s" %% "http4s-circe" % Http4sVersion, // Integration with Circe for handling JSON request/response bodies
+
+      // JSON library
+      "io.circe" %% "circe-core" % CirceVersion,
+      "io.circe" %% "circe-generic" % CirceVersion,
+
+      // Test library
+      "org.scalatest" %% "scalatest" % ScalaTestVersion % "test",
+
+      // Logging library
+      "ch.qos.logback" % "logback-classic" % LogbackVersion
+    ),
+  )
+  .settings(commonSettings)
+
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.8",
 
